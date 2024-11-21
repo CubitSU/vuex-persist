@@ -75,7 +75,11 @@
   },
   "dependencies": {
     "deepmerge": "^4.2.2",
-    "flatted": "^3.0.5"
+    "estree-walker": "^3.0.3",
+    "flatted": "^3.0.5",
+    "fs-extra": "^11.2.0",
+    "jest-worker": "^29.7.0",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "vuex": ">=2.5"
