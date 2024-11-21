@@ -95,7 +95,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
             : (
               (state: any) =>
                 (options!.modules as string[]).reduce((a, i) =>
-                  merge(a, { [i]: state[i] }, this.mergeOption), {/* start empty accumulator*/ })
+                  merge(a, { [i]: state[i] }), {/* start empty accumulator*/ })
             )
         )
     )
@@ -106,7 +106,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
 
     const _this = this
     this.RESTORE_MUTATION = function RESTORE_MUTATION(state: S, savedState: any) {
-      const mergedState = merge(state, savedState || {}, _this.mergeOption)
+      const mergedState = merge(state, savedState || {})
       for (const propertyName of Object.keys(mergedState as {})) {
         // Maintain support for vue 2
         if ((this as any)._vm !== undefined && (this as any)._vm.$set !== undefined) {
@@ -157,7 +157,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
               key, // Second argument is state _object_ if asyc storage, stringified otherwise
               // do not stringify the state if the storage type is async
               (this.asyncStorage
-                ? merge({}, state || {}, this.mergeOption)
+                ? merge({}, state || {})
                 : (
                   this.supportCircular
                     ? FlattedJSON.stringify(state) as any
@@ -189,7 +189,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
           if (this.strictMode) {
             store.commit('RESTORE_MUTATION', savedState)
           } else {
-            store.replaceState(merge(store.state, savedState || {}, this.mergeOption) as S)
+            store.replaceState(merge(store.state, savedState || {}) as S)
           }
           this.subscriber(store)((mutation: MutationPayload, state: S) => {
             if (this.filter(mutation)) {
@@ -255,7 +255,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
         if (this.strictMode) {
           store.commit('RESTORE_MUTATION', savedState)
         } else {
-          store.replaceState(merge(store.state, savedState || {}, this.mergeOption) as S)
+          store.replaceState(merge(store.state, savedState || {}) as S)
         }
 
         this.subscriber(store)((mutation: MutationPayload, state: S) => {
